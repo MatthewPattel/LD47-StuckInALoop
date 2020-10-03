@@ -1,0 +1,23 @@
+
+								[Bunch Of Colors]
+
+[ENGLISH]
+
+If you don't need the compability functions, delete the folder "Compability".
+
+You don't need to give credits to this asset or to WorldScript Technology, we just want to
+make your work easier. But, if you going to, thank you very much.
+
+It's recommended delete this file "IMPORTANT"
+
+
+
+[ESPAÑOL]
+
+Si no necesitas las funciones de compabilidad, elimina la carpeta "Compability".
+
+No necesitas otorgar creditos a este asset o a WorldScript Technology, solo queremos
+hacer tu trabajo más fácil. Pero si lo vas a hacer, muchas gracias.
+
+Es recomendado eliminar este archivo "IMPORTANT"
+

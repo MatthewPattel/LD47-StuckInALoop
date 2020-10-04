@@ -12,7 +12,7 @@ for (var gy = 0 ; gy < GRID_HEIGHT ; gy++) {
 	for (var gx = 0 ; gx < GRID_WIDTH ; gx++) {
 		var value = global.grid_level[@ level][# gx, gy];
 		
-		if (value <= global.time_current) {
+		if ((value != -1) and (value <= global.time_current)) {
 			
 			var truex = (gx*CELL_SIZE)+CELL_HALF;
 			var truey = (gy*CELL_SIZE)+CELL_HALF;

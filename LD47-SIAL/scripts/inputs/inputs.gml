@@ -68,10 +68,10 @@ function inputGame(input_menu) constructor {
 			if (abs(gp_axis_ly) <= threshold) gp_axis_ly = 0;
 			
 			// Right stick inputs
-			var gp_axis_rx_value = gamepad_axis_value(0, gp_axisrh);
-			var gp_axis_ry_value = gamepad_axis_value(0, gp_axisrv);
-			if (abs(gp_axis_rx_value) > GP_THRESHOLD) gp_axis_rx = gp_axis_rx_value;
-			if (abs(gp_axis_ry_value) > GP_THRESHOLD) gp_axis_ry = gp_axis_ry_value;
+			gp_axis_rx = gamepad_axis_value(0, gp_axisrh);
+			gp_axis_ry = gamepad_axis_value(0, gp_axisrv);
+			if (abs(gp_axis_rx) <= GP_THRESHOLD) gp_axis_rx = 0;
+			if (abs(gp_axis_ry) <= GP_THRESHOLD) gp_axis_ry = 0;
 			
 			// Face pressed inputs
 			var face1 = gamepad_button_check_pressed(0, gp_face1);
@@ -113,8 +113,8 @@ function inputGame(input_menu) constructor {
 			left = ((keyboard_check_pressed(ord("A"))) or ((gp_axis_lx < 0) and (horizontall_old == 0)));
 			right = ((keyboard_check_pressed(ord("D"))) or ((gp_axis_lx > 0) and (horizontall_old == 0)));
 			
-			accept = face1;
-			cancel = face2;
+			accept = ((keyboard_check_pressed(vk_space)) or (face1));
+			cancel = ((keyboard_check_pressed(vk_escape)) or (face2));
 		} else {
 			// Final inputs
 			up = (keyboard_check(ord("W")));
@@ -126,15 +126,14 @@ function inputGame(input_menu) constructor {
 			gp_axis_lx = (abs(gp_axis_lx) > GP_THRESHOLDT) ? sign(gp_axis_lx) : gp_axis_lx;
 			gp_axis_ly = (abs(gp_axis_ly) > GP_THRESHOLDT) ? sign(gp_axis_ly) : gp_axis_ly;
 			
+			gp_axis_rx = (abs(gp_axis_rx) > GP_THRESHOLDT) ? sign(gp_axis_rx) : gp_axis_rx;
+			gp_axis_ry = (abs(gp_axis_ry) > GP_THRESHOLDT) ? sign(gp_axis_ry) : gp_axis_ry;
+			
+			interact = ((keyboard_check_pressed(vk_space)) or (face1));
+			
 			// Get the movement on x and y
 			movex = (abs(right-left) > abs(gp_axis_lx)) ? (right-left) : gp_axis_lx;
 			movey = (abs(down-up) > abs(gp_axis_ly)) ? (down-up) : gp_axis_ly;
-			if (movex != 0) show_debug_message("movex"+string(movex));
-			if (movey != 0) show_debug_message("movey"+string(movey));
 		}
 	}
-	if (up) show_debug_message("up");
-	if (down) show_debug_message("down");
-	if (right) show_debug_message("right");
-	if (left) show_debug_message("left");
 }

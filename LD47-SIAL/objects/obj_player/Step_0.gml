@@ -2,36 +2,30 @@
 
 input.update();
 
-if (targetInputMouse) {
-	if ((input.horizontalr_old != abs(input.gp_axis_rx)) or (input.verticalr_old != abs(input.gp_axis_ry))) {
-		targetInputMouse = false;
-	} else {
-		targetInputMouse = true;
-	}
+if (gamepad_is_connected(0)) {
+	time = ((input.gp_axis_rx == 1) or (input.gp_axis_ry == 1)) ? time+0.2 : 0;
+	target.tAlign(input.gp_axis_rx*(speedTarget+(time*2)), input.gp_axis_ry*(speedTarget+(time*2)));
 } else {
-	if ((mouse_xprevious != mouse_x) or (mouse_yprevious != mouse_y)) {
-		targetInputMouse = true;
-	} else {
-		targetInputMouse = false;
-	}
+	target.tx = mouse_x;
+	target.ty = mouse_y;
 }
 
-targetInputMouse = false;
-var targetXZero, targetYZero, targetXReal, targetYreal;
-if (targetInputMouse) {
-	targetXReal = mouse_x;
-	targetYreal = mouse_y;
-} else {
-	targetXReal = x+input.gp_axis_rx;
-	targetYreal = y+input.gp_axis_ry;
+target.tUpdateCoordinates();
+
+var inst_near = (collision_line_point(x, y, target.tx, target.ty, obj_time_dependant, false, true));
+
+target.tx = inst_near[1];
+target.ty = inst_near[2];
+
+target.tUpdateCoordinates();
+
+if (inst_near[0] != noone) {
+	inst_near[0].selected = true;
+	if (input.interact) gridSetTimeActivation(inst_near[0]);
 }
 
-targetDirection = point_direction(x, y, targetXReal, targetYreal);
-targetx = x+lengthdir_x(targetDistance, targetDirection);
-targety = y+lengthdir_y(targetDistance, targetDirection);
-
-hsp = input.movex*3;
-vsp = input.movey*3;
+hsp = input.movex*speedMove;
+vsp = input.movey*speedMove;
 
 // Align pixel perfect in x
 hsp_final = hsp + hsp_f;
